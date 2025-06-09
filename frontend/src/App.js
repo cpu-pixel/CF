@@ -63,7 +63,7 @@ function App() {
 
   return (
     <div className="container">
-      <h2>UrbanSync: Create Project</h2>
+      <h2>CivicFlow: Create Project</h2>
       <form className="project-form" onSubmit={e => { e.preventDefault(); createProject(); }}>
         <div className="form-row">
           <label>Name:</label>
