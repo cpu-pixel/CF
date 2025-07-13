@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// API base URL from environment variable
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -31,7 +34,7 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           console.log('Checking authentication with token:', token);
-          const response = await axios.get('http://localhost:5000/api/auth/profile');
+          const response = await axios.get(`${API_BASE_URL}/api/auth/profile`);
           console.log('Auth check successful:', response.data);
           setUser(response.data.user);
         } catch (error) {
@@ -50,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       console.log('Attempting login for:', email);
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
         email,
         password
       });
@@ -74,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, userData);
       
       const { token: newToken, user: newUser } = response.data;
       
@@ -100,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (updates) => {
     try {
-      const response = await axios.put('http://localhost:5000/api/auth/profile', updates);
+      const response = await axios.put(`${API_BASE_URL}/api/auth/profile`, updates);
       setUser(response.data.user);
       return { success: true };
     } catch (error) {
@@ -113,7 +116,7 @@ export const AuthProvider = ({ children }) => {
 
   const changePassword = async (currentPassword, newPassword) => {
     try {
-      await axios.put('http://localhost:5000/api/auth/change-password', {
+      await axios.put(`${API_BASE_URL}/api/auth/change-password`, {
         currentPassword,
         newPassword
       });

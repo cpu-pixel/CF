@@ -1,12 +1,13 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
-const { authenticateToken, JWT_SECRET } = require('../middleware/auth');
+const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
 // Generate JWT token
 const generateToken = (userId) => {
+  const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '24h' });
 };
 
