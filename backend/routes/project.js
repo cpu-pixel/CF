@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../models/project.model');
+const { authenticateToken, requireRole, requireDepartmentAccess } = require('../middleware/auth');
 
 // Helper function to calculate weight
 function calculateWeight({ urgency, budget, startDate, endDate }) {
@@ -22,7 +23,7 @@ function calculateWeight({ urgency, budget, startDate, endDate }) {
 }
 
 // Create a new project
-router.post('/create', async (req, res) => {
+router.post('/create', authenticateToken, requireDepartmentAccess, async (req, res) => {
   try {
     const { name, department, urgency, startDate, endDate, budget, status } = req.body;
 
@@ -63,7 +64,7 @@ router.post('/create', async (req, res) => {
 });
 
 // Get all projects with search, filtering, and sorted by weight (descending)
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const { department, status, urgency, startDate, endDate } = req.query;
     let filter = {};
@@ -75,6 +76,11 @@ router.get('/', async (req, res) => {
       filter.startDate = {};
       if (startDate) filter.startDate.$gte = new Date(startDate);
       if (endDate) filter.startDate.$lte = new Date(endDate);
+    }
+
+    // Filter by department access (non-admin users can only see their department)
+    if (req.user.role !== 'admin') {
+      filter.department = req.user.department;
     }
 
     // Sort by weight descending (higher weight = higher priority)
