@@ -7,7 +7,7 @@
     "backend": "cd backend && npm start",
     "frontend": "cd frontend && npm start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "start": "npm run dev",
+    "start": "node start-backend.js",
     "create-admin": "cd backend && node scripts/createAdmin.js"
   },
   "devDependencies": {
