@@ -1,29 +1,17 @@
 {
-  "name": "urbansync-backend",
+  "name": "urbansync",
   "version": "1.0.0",
-  "description": "UrbanSync Backend API",
-  "main": "backend/server.js",
+  "description": "UrbanSync - Civic Project Management System",
   "scripts": {
     "install-all": "cd backend && npm install && cd ../frontend && npm install",
     "backend": "cd backend && npm start",
     "frontend": "cd frontend && npm start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "start": "cd backend && npm install && npm start",
+    "start": "npm run dev",
     "create-admin": "cd backend && node scripts/createAdmin.js"
-  },
-  "dependencies": {
-    "express": "^5.1.0",
-    "mongoose": "^8.15.1",
-    "cors": "^2.8.5",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "axios": "^1.9.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "engines": {
-    "node": ">=16.0.0"
   },
   "keywords": ["civic", "project-management", "urban-planning"],
   "author": "",

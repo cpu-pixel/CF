@@ -6,6 +6,11 @@ const AuthContext = createContext();
 // API base URL from environment variable
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
+// Debug logging
+console.log('🔧 Environment check:');
+console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+console.log('API_BASE_URL:', API_BASE_URL);
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
