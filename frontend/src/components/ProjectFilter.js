@@ -1,11 +1,19 @@
 import React from 'react';
 import './Dashboard.css';
+import { useDashboard } from './DashboardContext';
 
-function ProjectFilter({ filters, setFilters, onFilter }) {
+function ProjectFilter() {
+  const { filters, setFilters, fetchProjects } = useDashboard();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchProjects(filters);
+  };
+
   return (
     <div className="filter-section">
       <h3>Filter Projects</h3>
-      <form className="filter-form" onSubmit={onFilter}>
+      <form className="filter-form" onSubmit={handleSubmit}>
         <input
           placeholder="Department"
           value={filters.department}

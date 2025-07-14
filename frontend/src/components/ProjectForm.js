@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Dashboard.css';
+import { useDashboard } from './DashboardContext';
 
-function ProjectForm({ form, setForm, onCreate, user }) {
+function ProjectForm({ user }) {
+  const { createProject, loading } = useDashboard();
+  const [form, setForm] = useState({
+    name: '',
+    department: user?.department || '',
+    urgency: 'low',
+    startDate: '',
+    endDate: '',
+    budget: 0
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createProject(form, () => {
+      setForm({
+        name: '',
+        department: user?.department || '',
+        urgency: 'low',
+        startDate: '',
+        endDate: '',
+        budget: 0
+      });
+    });
+  };
+
   return (
     <div className="project-section">
       <h2>Create New Project</h2>
-      <form className="project-form" onSubmit={e => { e.preventDefault(); onCreate(); }}>
+      <form className="project-form" onSubmit={handleSubmit}>
         <div className="form-row">
           <label>Name:</label>
           <input 
@@ -59,7 +84,9 @@ function ProjectForm({ form, setForm, onCreate, user }) {
             onChange={e => setForm({ ...form, budget: Number(e.target.value) })} 
           />
         </div>
-        <button type="submit" className="create-button">Create Project</button>
+        <button type="submit" className="create-button" disabled={loading}>
+          {loading ? 'Creating...' : 'Create Project'}
+        </button>
       </form>
     </div>
   );
