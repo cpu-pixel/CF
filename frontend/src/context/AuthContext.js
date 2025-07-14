@@ -4,7 +4,7 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 // API base URL from environment variable
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://cf-production-123b.up.railway.app';
 
 // Debug logging
 console.log('🔧 Environment check:');
