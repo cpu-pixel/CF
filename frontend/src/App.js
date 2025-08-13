@@ -4,6 +4,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import Projects from './components/Projects';
+import CreateProject from './components/CreateProject';
 import './App.css';
 
 // Protected Route Component
@@ -47,6 +49,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/projects" 
+              element={
+                <ProtectedRoute>
+                  <Projects />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/create-project" 
+              element={
+                <ProtectedRoute>
+                  <CreateProject />
                 </ProtectedRoute>
               } 
             />

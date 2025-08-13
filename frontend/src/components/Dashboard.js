@@ -1,42 +1,25 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { DashboardProvider, useDashboard } from './DashboardContext';
 import './Dashboard.css';
 import DashboardHeader from './DashboardHeader';
 import DashboardStats from './DashboardStats';
-import ProjectForm from './ProjectForm';
-import ProjectFilter from './ProjectFilter';
-import ProjectList from './ProjectList';
-import { DashboardProvider, useDashboard } from './DashboardContext';
+import GanttChart from './GanttChart';
 
 function DashboardContent({ user, logout }) {
-  const {
-    projects,
-    filters,
-    setFilters,
-    loading,
-    error,
-    fetchProjects,
-    createProject
-  } = useDashboard();
+  const { fetchProjects, projects } = useDashboard();
 
   useEffect(() => {
     if (user) {
-      fetchProjects(filters);
+      // Fetch projects when dashboard mounts
+      fetchProjects();
     }
-    // eslint-disable-next-line
-  }, [user]);
-
-  const handleFilter = (e) => {
-    e.preventDefault();
-    fetchProjects(filters);
-  };
+  }, [user, fetchProjects]);
 
   const handleLogout = () => {
     logout();
   };
-
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <div className="dashboard-container">
@@ -44,9 +27,20 @@ function DashboardContent({ user, logout }) {
       <div className="dashboard-content">
         <DashboardStats totalProjects={projects.length} department={user?.department} role={user?.role} />
         <div className="main-content">
-          <ProjectForm user={user} onCreate={createProject} />
-          <ProjectFilter filters={filters} setFilters={setFilters} onFilter={handleFilter} />
-          <ProjectList projects={projects} />
+          <div className="dashboard-welcome">
+            <h2>Welcome to UrbanSync Dashboard</h2>
+            <p>Manage your projects and track progress efficiently</p>
+            <div className="dashboard-actions">
+              <Link to="/projects" className="dashboard-action-btn">
+                View All Projects
+              </Link>
+              <Link to="/create-project" className="dashboard-action-btn secondary">
+                Create New Project
+              </Link>
+            </div>
+          </div>
+          
+          <GanttChart />
         </div>
       </div>
     </div>

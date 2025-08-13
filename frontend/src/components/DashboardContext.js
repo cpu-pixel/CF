@@ -12,7 +12,8 @@ export const DashboardProvider = ({ children }) => {
     department: '',
     urgency: '',
     startDate: '',
-    endDate: ''
+    endDate: '',
+    search: ''
   });
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(false);
