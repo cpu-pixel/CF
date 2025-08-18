@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: urbansync-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add other env vars here or set them in the Render dashboard
